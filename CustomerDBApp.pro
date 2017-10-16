@@ -25,10 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        customerapp.cpp
+        customerapp.cpp \
+    customer.cpp \
+    customerdata.cpp
 
 HEADERS += \
-        customerapp.h
+        customerapp.h \
+    customer.h \
+    customerdata.h
 
 FORMS += \
         customerapp.ui

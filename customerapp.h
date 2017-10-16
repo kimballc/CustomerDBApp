@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <string>
+#include "customerdata.h"
+
 
 namespace Ui {
 class CustomerApp;
@@ -23,11 +25,8 @@ private slots:
 
 private:
     Ui::CustomerApp *ui;
-    // opens a connection to the database & retrieves your customer info
-    void connectToDb();
-    // updates your customer record in the database
-    void updateDb(QString &lastname, QString &email,
-                      QString &city, QString &state);
+    CustomerData data;
+    void showCustomer(Customer);
 
 };
 
