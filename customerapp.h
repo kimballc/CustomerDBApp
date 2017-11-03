@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <string>
 #include "customerdata.h"
+#include "customerlistmodel.h"
 
 
 namespace Ui {
@@ -23,11 +24,13 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_customerListView_clicked(const QModelIndex &index);
+
 private:
     Ui::CustomerApp *ui;
     CustomerData data;
-    void showCustomer(Customer);
-
+    void showCustomer(const QModelIndex &);
+    CustomerListModel* listModel;
 };
 
 #endif // CUSTOMERAPP_H

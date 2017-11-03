@@ -25,7 +25,7 @@ CustomerData::CustomerData()
     db.setDatabaseName("DRIVER={SQL Server};Server=jpgrady28.database.windows.net;Database=restaurant;Uid=cs245@jpgrady28;Port=1433;Pwd=C_plus_plus;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
 
     // load the customer info from the database
-    this->loadCustomer();
+    this->_loadCustomers();
 }
 
 /*
@@ -39,9 +39,9 @@ CustomerData::~CustomerData()
 
 
 // load the customer from the database
-void CustomerData::loadCustomer()
+void CustomerData::_loadCustomers()
 {
-
+    Customer myCustomer;
     // open the connection
     bool ok = db.open();
 
@@ -56,8 +56,7 @@ void CustomerData::loadCustomer()
             // Create a prepared statement;
             // Get the customer record whose last name matches yours
             //
-            query.prepare("SELECT * FROM customer WHERE lastName = ?");
-            query.bindValue(0, "Kimball");
+            query.prepare("SELECT * FROM customer");
 
             // If your SQL was OK...
             if(query.exec())
@@ -87,6 +86,8 @@ void CustomerData::loadCustomer()
                     myCustomer.setEmail(email);
                     myCustomer.setHomeTown(city);
                     myCustomer.setHomeState(state);
+
+                    customers.push_back(myCustomer);
                  }
              }
 
@@ -98,8 +99,13 @@ void CustomerData::loadCustomer()
 
 
 // update a customer record in the database
-bool CustomerData::updateCustomer(const string &lastName, const string &email, const string &city, const string &state)
+bool CustomerData::updateCustomer(int index, const string &lastName, const string &email, const string &city, const string &state)
 {
+    //get the customer
+    Customer& custToUpdate = getCustomer(index);
+    custToUpdate.setEmail(email);
+    custToUpdate.setHomeState(state);
+    custToUpdate.setHomeTown(city);
     // open the connection
     bool ok = db.open();
 

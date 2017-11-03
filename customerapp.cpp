@@ -15,13 +15,28 @@ CustomerApp::CustomerApp(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // get the customer info from CustomerData & display it
-    this->showCustomer(data.getCustomer());
+    // ADDED - initializes the customer list model;
+    // gets the customers from CustomerData and passes it
+    // to the model
+    listModel = new CustomerListModel(data.getCustomers());
+
+    // ADDED - sets the model of the customer list view
+    // to 'listModel'
+    ui->customerListView->setModel(listModel);
+
+          // ADDED - sets the first item as the current selection
+          ui->customerListView->setCurrentIndex(this->listModel->index(0,0));
+
+    // UPDATED - now passes the CustomerListModel index of
+    // the first item in the customer list
+    this->showCustomer(this->listModel->index(0,0));
 }
+
 
 
 CustomerApp::~CustomerApp()
 {
+    delete listModel;   //dynamically remove listModel from memory
     delete ui;
 }
 
@@ -37,9 +52,11 @@ void CustomerApp::on_updateButton_clicked()
     std::string email = ui->emailData->text().toStdString();
     std::string city = ui->cityData->text().toStdString();
     std::string state = ui->stateData->text().toStdString();
+    // ADDED - get the index of current customer from list view
+    int index = ui->customerListView->currentIndex().row();
 
-      // If the database update was successful, print a message
-    if(data.updateCustomer(lastName, email, city, state))
+    // UPDATED - added the index as the first parameter
+    if(data.updateCustomer(index, lastName, email, city, state))
     {
         // display a message box
         QMessageBox::information(
@@ -56,8 +73,10 @@ void CustomerApp::on_actionExit_triggered()
     exit(0);
 }
 
-void CustomerApp::showCustomer(Customer c)
+void CustomerApp::showCustomer(const QModelIndex &index)
 {
+    Customer c = data.getCustomer(index.row());
+
     QString firstName = QString::fromStdString(c.getFirstName());
     QString lastName = QString::fromStdString(c.getLastName());
     QString email = QString::fromStdString(c.getEmail());
@@ -72,4 +91,9 @@ void CustomerApp::showCustomer(Customer c)
     ui->cityData->setText(city);
     ui->stateData->setText(state);
 
+}
+
+void CustomerApp::on_customerListView_clicked(const QModelIndex &index)
+{
+    this->showCustomer(index);
 }

@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         customerapp.cpp \
     customer.cpp \
-    customerdata.cpp
+    customerdata.cpp \
+    customerlistmodel.cpp
 
 HEADERS += \
         customerapp.h \
     customer.h \
-    customerdata.h
+    customerdata.h \
+    customerlistmodel.h
 
 FORMS += \
         customerapp.ui

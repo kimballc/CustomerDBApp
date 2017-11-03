@@ -4,6 +4,7 @@
 #include "customer.h"
 #include <string>
 #include <QtSql/QSqlDatabase>
+#include <vector>
 
 class CustomerData
 {
@@ -14,20 +15,21 @@ public:
     ~CustomerData();    // destructor
 
     // get method
-    Customer getCustomer() { return myCustomer; }
+    Customer& getCustomer(int index) { return customers[index]; }
+    std::vector<Customer>& getCustomers() {return customers;}
 
     // update a customer record in the database
-    bool updateCustomer(const std::string &lastName,
+    bool updateCustomer(int index, const std::string &lastName,
              const std::string &email,
                         const std::string &city,
              const std::string &state);
 
 private:
 
-    Customer myCustomer;    // stores a single customer
+    std::vector<Customer> customers;    // stores multiple customers
     QSqlDatabase db;        // variable for database
 
-    void loadCustomer();    // loads the customer record from the database
+    void _loadCustomers();    // loads the customer record from the database
 
 };
 
