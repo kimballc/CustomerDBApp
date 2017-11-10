@@ -16,7 +16,14 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="2" column="0">
-     <widget class="QListView" name="customerListView"/>
+     <widget class="QListView" name="customerListView">
+      <property name="maximumSize">
+       <size>
+        <width>225</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
     </item>
     <item row="2" column="1" colspan="2">
      <widget class="QGroupBox" name="groupBox">
