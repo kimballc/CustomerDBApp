@@ -22,7 +22,7 @@ CustomerData::CustomerData()
 {
     // create a database connection object
     db = QSqlDatabase::addDatabase("QODBC");
-    db.setDatabaseName("DRIVER={SQL Server};Server=jpgrady28.database.windows.net;Database=restaurant;Uid=cs245@jpgrady28;Port=1433;Pwd=C_plus_plus;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
+    db.setDatabaseName("DRIVER={SQL Server};Server=customerapp-ck.database.windows.net;Database=restaurant;Uid=cs245@customerapp-ck;Port=1433;Pwd=Thomas123;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
 
     // load the customer info from the database
     this->_loadCustomers();
